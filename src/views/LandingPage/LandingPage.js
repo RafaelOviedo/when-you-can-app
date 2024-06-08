@@ -15,7 +15,7 @@ function LandingPage() {
     <div className={style.landingPageView}>
       <div className={style.landingContainer}>
         <p className={style.mainText}>
-          <span style={ { color: '#fff' } }>When you can</span> allows you to organize <span style={ { color: '#fff' } }>effectively</span> those things you want to do with your <span style={ { color: '#fff' } }>friends</span>
+          <span style={ { color: '#F6B17A' } }>WHEN YOU CAN</span> allows you to organize <span style={ { color: '#F6B17A' } }>effectively</span> those things you want to do with your <span style={ { color: '#F6B17A' } }>friends</span>
         </p>
 
         <div className={style.inputButtonContainer}>

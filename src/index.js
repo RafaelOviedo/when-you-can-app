@@ -7,6 +7,8 @@ import { BrowserRouter as Router} from "react-router-dom";
 import store from './store/store';
 import { Provider } from 'react-redux';
 import axios from 'axios';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 // axios config
 // axios.defaults.headers.common['Authorization'] = store.getters.token;
@@ -18,7 +20,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <App />
+        </LocalizationProvider>
       </Router>
     </Provider>
   </React.StrictMode>
