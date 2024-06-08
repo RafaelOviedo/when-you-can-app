@@ -6,7 +6,7 @@ import axios from 'axios';
 import style from './GroupDetails.module.css';
 
 import { Accordion, AccordionTab } from 'primereact/accordion';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 function GroupDetails() {
   const { id } = useParams();
@@ -32,6 +32,14 @@ function GroupDetails() {
     setSelectedDate(formattedDate);
   };
 
+  const removeDate = () => {
+    setSelectedDate(null)
+  }
+
+  const calendarStyles = {
+    bgcolor: 'white',
+  }
+
   useEffect(() => {
     getCurrentGroup();
   }, [getCurrentGroup]);
@@ -51,7 +59,7 @@ function GroupDetails() {
               <AccordionTab header="Group Members">
                 { groupDetails.members && groupDetails.members.map((member) => (
                   <li style={ { listStyleType: 'none' } } key={member.id}>
-                    { member.email }
+                    { member.email.split('@')[0] }
                   </li>
                 )) }
               </AccordionTab>
@@ -62,8 +70,12 @@ function GroupDetails() {
             </div>
 
             <div className={style.calendarContainer}>
-              <DatePicker onChange={selectDate} slotProps={{ textField: { size: 'small' } }} style={{color: '#fff'}} />
-              {selectedDate}
+              <span style={ { color: '#fff' } }>Select one or multiple days when you can assist</span>
+              <DateCalendar onChange={selectDate} slotProps={{ textField: { size: 'small' } }} sx={calendarStyles} />
+              <div className={style.datesContainer}>
+                <span className={style.dateText}>{ selectedDate } { selectedDate ? <i onClick={removeDate} className='pi pi-trash'></i> : '' } </span>
+              </div>
+              <button className={style.saveDatesButton}>Save Dates</button>
             </div>
           </div>
         </div>
