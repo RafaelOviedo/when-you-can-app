@@ -7,12 +7,14 @@ import style from './GroupDetails.module.css';
 
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { useSelector } from 'react-redux';
 
 function GroupDetails() {
   const { id } = useParams();
   const [groupDetails, setGroupDetails] = useState({});
   const [isGroupDetailsError, setIsGroupDetailsError] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const currentUser = useSelector((state) => state.auth.user);
 
   const getCurrentGroup = useCallback(async() => {
     try {
@@ -73,7 +75,11 @@ function GroupDetails() {
               <span style={ { color: '#fff' } }>Select one or multiple days when you can assist</span>
               <DateCalendar onChange={selectDate} slotProps={{ textField: { size: 'small' } }} sx={calendarStyles} />
               <div className={style.datesContainer}>
-                <span className={style.dateText}>{ selectedDate } { selectedDate ? <i onClick={removeDate} className='pi pi-trash'></i> : '' } </span>
+                { 
+                  currentUser?.dates_bucket && currentUser?.dates_bucket.map((date, index) => (
+                    <span className={style.dateText} key={index}>{ date } { date ? <i onClick={removeDate} className='pi pi-trash'></i> : '' } </span>
+                  )) 
+                }
               </div>
               <button className={style.saveDatesButton}>Save Dates</button>
             </div>

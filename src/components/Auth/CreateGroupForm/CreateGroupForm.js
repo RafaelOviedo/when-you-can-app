@@ -1,10 +1,15 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import style from './CreateGroupForm.module.css';
 import axios from 'axios';
+
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 import 'primereact/resources/themes/saga-blue/theme.css';
+
+import { setUser } from '../../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 function CreateGroupForm() {
   const navigate = useNavigate();
@@ -16,6 +21,8 @@ function CreateGroupForm() {
     email: '',
     password: '',
   })
+
+  const dispatch = useDispatch();
 
   const handleGroupInputChange = (event) => {
     const { value } = event.target;
@@ -43,14 +50,22 @@ function CreateGroupForm() {
 
   const createUser = async () => {
     try {
-      const response = await axios.post('/users', { 
+      const userResponse = await axios.post('/users', { 
         group_id: groupId.current, 
         email: userFields.email, 
         password: userFields.password, 
         password_confirmation: userFields.password 
       });
 
-      console.log('RESPONSE', response.data);
+      const authResponse = await axios.post('/auth', { 
+        email: userResponse.data.email, 
+        password: userFields.password 
+      });
+
+      const user = authResponse.data.user;
+      const token = authResponse.data.jwt;
+
+      dispatch(setUser({ user: user, token: token }));
     } 
     catch (error) {
       throw new Error(error);
