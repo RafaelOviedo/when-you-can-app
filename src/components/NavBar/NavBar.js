@@ -17,17 +17,10 @@ function NavBar() {
   return (
     <nav className={style.navContainer}>
       <div className={style.logoContainer}>
-        <span onClick={() => navigate('/home')} style={ { fontSize: '20px', fontWeight: 500, color: '#fff', cursor: 'pointer' } }>WHEN YOU CAN</span>
+        <span onClick={() => navigate('/')} style={ { fontSize: '15px', fontWeight: 'bold', color: '#fff', cursor: 'pointer' } }>WHEN YOU CAN</span>
       </div>
 
       <div className={style.navBox}>
-        <Link 
-          to='/home'
-          className={style.linkItem} 
-        >
-          Home
-        </Link>
-
         <Link 
           to='/about'
           className={style.linkItem}
